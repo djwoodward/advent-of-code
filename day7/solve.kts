@@ -6,7 +6,7 @@ import java.math.BigInteger
 
 // example result
 // part 1 = 3749
-// part 2 = ?
+// part 2 = 11387
 val exampleText = 
     """
     190: 10 19
@@ -21,7 +21,6 @@ val exampleText =
     """.trimIndent()
 
 
-
 val inputText = Files.readString(Path.of("input.txt"))
 // val inputText = exampleText
 
@@ -29,7 +28,7 @@ val inputText = Files.readString(Path.of("input.txt"))
 fun <T> permutate(numPermutations: Int, baseValues: List<T>): List<List<T>> {
     val permutations = mutableListOf<List<T>>()
     
-    repeat(2.toDouble().pow(numPermutations).toInt()) {
+    repeat(baseValues.size.toDouble().pow(numPermutations).toInt()) {
         var num = BigInteger.valueOf(it.toLong())
         // println("numPermutations = $numPermutations, it=$it, num=$num")
 
@@ -52,15 +51,24 @@ fun <T> permutate(numPermutations: Int, baseValues: List<T>): List<List<T>> {
 typealias Op = (BigInteger, BigInteger) -> BigInteger
 val plus: Op = { val1: BigInteger, val2: BigInteger -> val1 + val2 }
 val mult: Op = { val1: BigInteger, val2: BigInteger -> val1 * val2 }
-val ops = listOf<Op>(plus, mult)
+val concat: Op = { val1: BigInteger, val2: BigInteger -> 
+    BigInteger(val1.toString() + val2.toString())
+}
+
+// remove concat to do part 1
+val ops = listOf<Op>(plus, mult, concat)
 
 var totalAccumulator = BigInteger("0")
 inputText.lines().forEach {
     val result = BigInteger(it.split(":")[0])
     val values = it.split(":")[1].trim().split(' ').map { BigInteger(it) }
 
+    // val permutations = permutate(values.size - 1, listOf("+", "-", "*"))
+    // println("values=$values")
+    // permutations.forEach { operations ->
+    //     println("operations=$operations")
+    // }
     val permutations = permutate(values.size - 1, ops)
-    println("values=$values")
 
     var match = false
     run breaking@ {
@@ -86,6 +94,5 @@ inputText.lines().forEach {
 }
 
 println("--------------------------------")
-println("Part 1: $totalAccumulator")
-// println("Part 2: $part2")
+println("totalAccumulator: $totalAccumulator")
 println("Done with day5/solve.kts")
