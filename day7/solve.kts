@@ -95,4 +95,4 @@ inputText.lines().forEach {
 
 println("--------------------------------")
 println("totalAccumulator: $totalAccumulator")
-println("Done with day5/solve.kts")
+println("Done with day7/solve.kts")
