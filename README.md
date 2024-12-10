@@ -21,5 +21,5 @@ https://docs.deno.com/runtime/getting_started/installation/
 #### For the deno/typescript scripts
 
 ```
-   deno --allow-read part1.ts
+   deno --allow-read --check solve.ts
 ```
