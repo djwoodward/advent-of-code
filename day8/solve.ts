@@ -1,4 +1,4 @@
-import { pairs } from './common.ts'
+import { pairs, print, println } from '../ts-common/common.ts'
 
 const inputData = await Deno.readTextFile('input.txt')
 
@@ -7,26 +7,26 @@ const result = inputData.split('\n').map(line => {
   }
 );
 
-const antennas = []
+const antennas: {value: string, x: number, y: number }[] = []
 let xmax = result[0].length
 let ymax = result.length
 result.forEach((line, y) => {
     line.forEach((item, x) => {
-        process.stdout.write(item)
+        print(item)
         if (item != '.') {
             antennas.push({value: item, x: x, y: y})
         }
     });
-    process.stdout.write('\n')
+    print('\n')
     ymax = result.length
     xmax = line.length
 });
 
-console.log(`xmax=${xmax}, ymax=${ymax}`)
+println(`xmax=${xmax}, ymax=${ymax}`)
 const antennaPairs = pairs(antennas).filter(item => item[0].value == item[1].value)
-console.log(antennaPairs)
+println(antennaPairs)
 const allAntennaPairs = antennaPairs.flatMap(i => i)
-console.log(allAntennaPairs)
+println(allAntennaPairs)
 
 function getAntinodes(firstLevel: boolean) {
     let antinodes: Array<String> = []
@@ -46,7 +46,7 @@ function getAntinodes(firstLevel: boolean) {
         let y3 = y2 + diffy
     
         while (x3 >= 0 && x3 < xmax && y3 >= 0 && y3 < ymax) {
-            // console.log(`(${x1},${y1}) -> (${x2},${y2}) -> (${x3},${y3}), diffx=${diffx}. diffy=${diffy}`)
+            // println(`(${x1},${y1}) -> (${x2},${y2}) -> (${x3},${y3}), diffx=${diffx}. diffy=${diffy}`)
             antinodes.push(`${x3},${y3}`)
     
             if (firstLevel) {
@@ -65,8 +65,8 @@ const antinodes2 = getAntinodes(false)
 const part1 = Array.from(new Set(antinodes)).sort()
 const part2 = Array.from(new Set(antinodes2)).sort()
 
-console.log('-------------------')
-console.log(`part1 = ${part1.length}`)
-console.log(`part2 = ${part2.length}`)
-console.log('-------------------')
-console.log(`Done with Day 8`)
+println('-------------------')
+println(`part1 = ${part1.length}`)
+println(`part2 = ${part2.length}`)
+println('-------------------')
+println(`Done with Day 8`)

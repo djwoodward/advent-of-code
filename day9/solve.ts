@@ -1,4 +1,4 @@
-import { print, println, partition } from './common.ts'
+import { print, println, partition, swapArrayItems } from '../ts-common/common.ts'
 
 const inputData = await Deno.readTextFile('input.txt')
 const inputChars = inputData.split('')
@@ -33,7 +33,7 @@ function getBlocks(): Block[] {
     return blocks
 }
 
-async function fragment(original: Block[]): Promise<Block[]> {
+function fragment(original: Block[]): Block[] {
     const blocks = JSON.parse(JSON.stringify(original))
     let ptrFront = -1
     let ptrBack = blocks.length
@@ -53,12 +53,12 @@ async function fragment(original: Block[]): Promise<Block[]> {
         } while (backBlock.id == undefined)
     
         if (ptrFront < ptrBack) {
-            // await println(`front=${ptrFront}, back=${ptrBack}`)
+            // println(`front=${ptrFront}, back=${ptrBack}`)
             frontBlock.id = backBlock.id
             backBlock.id = undefined
-            // await println(toString(blocks))
+            // println(toString(blocks))
         } else {
-            // await println("done looping")
+            // println("done looping")
         }
     }
     return blocks
@@ -74,12 +74,6 @@ function calculateChecksum(blocks: Block[]): number {
     }, 0);
 }
 
-function swapArrayItems<T>(arr: T[], index1: number, index2: number): void {
-    const temp = arr[index1];
-    arr[index1] = arr[index2];
-    arr[index2] = temp;
-}
-
 function getBlockGroups(blocks: Block[]): Block[][] {
     return blocks.reduce((acc: Block[][], currValue: Block, i: number) => {
         currValue.pos = i
@@ -93,7 +87,7 @@ function getBlockGroups(blocks: Block[]): Block[][] {
     }, []);
 }
 
-async function moveWholeFiles(original: Block[]): Promise<Block[]> {
+function moveWholeFiles(original: Block[]): Block[] {
     const blocks = JSON.parse(JSON.stringify(original)) as Block[]
 
     new Set(blocks.filter(b => b.id != undefined))
@@ -127,26 +121,26 @@ async function moveWholeFiles(original: Block[]): Promise<Block[]> {
     return blocks
 }
 
-await println("getting blocks...")
+println("getting blocks...")
 const blocks = getBlocks()
-await println("fragmenting blocks...")
-const fragmented = await fragment(blocks)
-await println("generating checksum...")
+println("fragmenting blocks...")
+const fragmented = fragment(blocks)
+println("generating checksum...")
 const checksum = calculateChecksum(fragmented)
-await println("moving blocks in whole...")
-const afterMoved = await moveWholeFiles(blocks)
-await println("generating checksum...")
+println("moving blocks in whole...")
+const afterMoved = moveWholeFiles(blocks)
+println("generating checksum...")
 const checksum2 = calculateChecksum(afterMoved)
 
-await println('--- Part 1 ---------')
-await println(`original =  ${toString(blocks)}`)
-await println('example  =  0099811188827773336446555566..............')
-await println(`answer   =  ${toString(fragmented)}`)
-await println(`part1 (1928) = ${checksum}`)
-await println('--- Part 2 ---------')
-await println(`original =  ${toString(blocks)}`)
-await println('example  =  00992111777.44.333....5555.6666.....8888..')
-await println(`answer   =  ${toString(afterMoved)}`)
-await println(`part2 (2858) = ${checksum2}`)
-await println('-------------------')
-await println(`Done with Day 8`)
+println('--- Part 1 ---------')
+println(`original =  ${toString(blocks)}`)
+println('example  =  0099811188827773336446555566..............')
+println(`answer   =  ${toString(fragmented)}`)
+println(`part1 (1928) = ${checksum}`)
+println('--- Part 2 ---------')
+println(`original =  ${toString(blocks)}`)
+println('example  =  00992111777.44.333....5555.6666.....8888..')
+println(`answer   =  ${toString(afterMoved)}`)
+println(`part2 (2858) = ${checksum2}`)
+println('-------------------')
+println(`Done with Day 9`)
