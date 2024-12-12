@@ -1,6 +1,6 @@
-# advent-of-code-2024
+# Advent Of Code
 
-This year I'm using kotlin and typescript
+For 2024 I'm using kotlin and typescript
 
 ### Installing kotlinc
 https://kotlinlang.org/docs/command-line.html#homebrew
