@@ -32,3 +32,27 @@ export function partition<T>(array: Array<T>, pred: (elem: T) => boolean): [T[],
     return pred(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
   }, [[], []]);
 }
+
+export function getWithDefault<K, T>(map: Map<K, T>, key: K, defaultVal: T): T {
+  let value = map.get(key)
+  if (value == undefined) {
+      map.set(key, defaultVal)
+      value = defaultVal
+  }
+  return value
+}
+
+export function splitAlternating<T>(list: T[]): [T[], T[]] {
+  const list1: T[] = [];
+  const list2: T[] = [];
+
+  list.forEach((item, index) => {
+      if (index % 2 === 0) {
+          list1.push(item);
+      } else {
+          list2.push(item);
+      }
+  });
+
+  return [list1, list2];
+}
