@@ -27,7 +27,7 @@ export function println(anyVal: any) {
   print("\n")
 }
 
-export function partition<T>(array: Array<T>, pred: (elem: T) => boolean): [T[], T[]] {
+export function partition<T>(array: Array<T>, pred: (elem: T) => unknown): [T[], T[]] {
   return array.reduce<[T[], T[]]>(([pass, fail], elem) => {
     return pred(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
   }, [[], []]);
