@@ -12,9 +12,9 @@ function solve2(inputData: string): number {
 }
 
 let part1example = solve1(exampleData)
-let part1 = solve1(inputData)
-let part2example = solve2(exampleData)
-let part2 = solve2(inputData)
+let part1 = undefined // solve1(inputData)
+let part2example = undefined // solve2(exampleData)
+let part2 = undefined // solve2(inputData)
 
 println('')
 println('--- Part 1 ---------')
